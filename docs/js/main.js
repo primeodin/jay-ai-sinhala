@@ -1,5 +1,5 @@
 /**
- * Jay AI Sinhala — shared UI + Web Speech API (si-LK)
+ * Jay AI Sinhala — අහන්න: Dilu pre-recorded audio first, Web Speech fallback
  */
 (function () {
   "use strict";
@@ -11,9 +11,11 @@
   var synth = window.speechSynthesis || null;
   var currentUtterance = null;
   var currentBtn = null;
+  var currentAudio = null;
   var toastEl = null;
   var voicesReady = false;
   var sinhalaVoice = null;
+  var mode = null; // "audio" | "speech"
 
   function $(sel, root) {
     return (root || document).querySelector(sel);
@@ -60,23 +62,51 @@
     voicesReady = true;
   }
 
+  function setPlayingUi(btn, playing) {
+    if (!btn) return;
+    if (playing) {
+      btn.classList.add("is-playing");
+      var labelOn = btn.querySelector(".listen-label");
+      if (labelOn) labelOn.textContent = "නවත්වන්න";
+      btn.setAttribute("aria-pressed", "true");
+      currentBtn = btn;
+    } else {
+      btn.classList.remove("is-playing");
+      var labelOff = btn.querySelector(".listen-label");
+      if (labelOff) labelOff.textContent = "අහන්න";
+      btn.setAttribute("aria-pressed", "false");
+      if (currentBtn === btn) currentBtn = null;
+    }
+  }
+
   function stopSpeaking() {
+    if (currentAudio) {
+      try {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+      } catch (e) {}
+      currentAudio = null;
+    }
     if (synth) {
       try {
         synth.cancel();
       } catch (e) {}
     }
-    if (currentBtn) {
-      currentBtn.classList.remove("is-playing");
-      var label = currentBtn.querySelector(".listen-label");
-      if (label) label.textContent = "අහන්න";
-      currentBtn.setAttribute("aria-pressed", "false");
-    }
+    if (currentBtn) setPlayingUi(currentBtn, false);
     currentUtterance = null;
-    currentBtn = null;
+    mode = null;
   }
 
   function pauseOrResume() {
+    if (mode === "audio" && currentAudio) {
+      if (currentAudio.paused) {
+        currentAudio.play().catch(function () {});
+      } else {
+        currentAudio.pause();
+        showToast("නැවතුණා. නැවත අරඹන්නට ඔබන්න.");
+      }
+      return;
+    }
     if (!synth) return;
     if (synth.speaking && !synth.paused) {
       synth.pause();
@@ -88,11 +118,28 @@
 
   function getTextFromTarget(target) {
     if (!target) return "";
+    var speakAttr = target.getAttribute && target.getAttribute("data-speak");
+    if (speakAttr && speakAttr.trim()) return speakAttr.trim();
+
     var clone = target.cloneNode(true);
-    $all(".listen-bar, .btn, button, .nav-tools, script, style", clone).forEach(function (el) {
+    $all(".listen-bar, .btn, button, .nav-tools, script, style, .pron", clone).forEach(function (el) {
       el.parentNode && el.parentNode.removeChild(el);
     });
+    $all("[data-speak]", clone).forEach(function (el) {
+      var s = el.getAttribute("data-speak");
+      if (s !== null) el.textContent = s;
+    });
     return (clone.innerText || clone.textContent || "").replace(/\s+/g, " ").trim();
+  }
+
+  function resolveAudioUrl(btn, target) {
+    var fromBtn = btn && btn.getAttribute("data-audio");
+    if (fromBtn) return fromBtn;
+    if (target && target.getAttribute) {
+      var fromRoot = target.getAttribute("data-audio");
+      if (fromRoot) return fromRoot;
+    }
+    return null;
   }
 
   function speakText(text, btn) {
@@ -106,6 +153,7 @@
     }
 
     stopSpeaking();
+    mode = "speech";
 
     var u = new SpeechSynthesisUtterance(text);
     u.lang = LANG_PRIMARY;
@@ -121,24 +169,13 @@
     }
 
     u.onstart = function () {
-      if (btn) {
-        btn.classList.add("is-playing");
-        var label = btn.querySelector(".listen-label");
-        if (label) label.textContent = "නවත්වන්න";
-        btn.setAttribute("aria-pressed", "true");
-        currentBtn = btn;
-      }
+      setPlayingUi(btn, true);
     };
 
     u.onend = function () {
-      if (btn) {
-        btn.classList.remove("is-playing");
-        var label = btn.querySelector(".listen-label");
-        if (label) label.textContent = "අහන්න";
-        btn.setAttribute("aria-pressed", "false");
-      }
+      setPlayingUi(btn, false);
       currentUtterance = null;
-      currentBtn = null;
+      mode = null;
     };
 
     u.onerror = function () {
@@ -162,6 +199,44 @@
     }
   }
 
+  function playAudio(url, btn, fallbackText) {
+    stopSpeaking();
+    mode = "audio";
+    var audio = new Audio(url);
+    audio.preload = "auto";
+    currentAudio = audio;
+
+    function failToSpeech() {
+      currentAudio = null;
+      mode = null;
+      if (fallbackText) {
+        speakText(fallbackText, btn);
+      } else {
+        setPlayingUi(btn, false);
+        showToast("හඬ ගොනුව ලබාගත නොහැක. පෙළ කියවන්න.");
+      }
+    }
+
+    audio.addEventListener("play", function () {
+      setPlayingUi(btn, true);
+    });
+    audio.addEventListener("ended", function () {
+      setPlayingUi(btn, false);
+      currentAudio = null;
+      mode = null;
+    });
+    audio.addEventListener("error", function () {
+      failToSpeech();
+    });
+
+    var p = audio.play();
+    if (p && typeof p.then === "function") {
+      p.catch(function () {
+        failToSpeech();
+      });
+    }
+  }
+
   function onListenClick(btn) {
     if (btn.classList.contains("is-playing")) {
       stopSpeaking();
@@ -170,7 +245,12 @@
     var sel = btn.getAttribute("data-read");
     var target = sel ? $(sel) : btn.closest("[data-listen-root]") || btn.closest(".section, .hero, .card, main");
     var text = btn.getAttribute("data-text") || getTextFromTarget(target);
-    speakText(text, btn);
+    var audioUrl = resolveAudioUrl(btn, target);
+    if (audioUrl) {
+      playAudio(audioUrl, btn, text);
+    } else {
+      speakText(text, btn);
+    }
   }
 
   function wireListenButtons() {
@@ -288,6 +368,7 @@
 
   window.JayTTS = {
     speak: speakText,
+    play: playAudio,
     stop: stopSpeaking,
     pause: pauseOrResume
   };

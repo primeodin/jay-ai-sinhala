@@ -1,0 +1,122 @@
+{
+  "home-intro": {
+    "file": "audio/home-intro.mp3",
+    "chars": 242,
+    "bytes": 130885
+  },
+  "home-why": {
+    "file": "audio/home-why.mp3",
+    "chars": 237,
+    "bytes": 122725
+  },
+  "home-tip": {
+    "file": "audio/home-tip.mp3",
+    "chars": 112,
+    "bytes": 64729
+  },
+  "what-hero": {
+    "file": "audio/what-hero.mp3",
+    "chars": 69,
+    "bytes": 41080
+  },
+  "what-computer": {
+    "file": "audio/what-computer.mp3",
+    "chars": 133,
+    "bytes": 77855
+  },
+  "what-internet": {
+    "file": "audio/what-internet.mp3",
+    "chars": 122,
+    "bytes": 68460
+  },
+  "what-website": {
+    "file": "audio/what-website.mp3",
+    "chars": 152,
+    "bytes": 72986
+  },
+  "what-github": {
+    "file": "audio/what-github.mp3",
+    "chars": 187,
+    "bytes": 96047
+  },
+  "what-ai": {
+    "file": "audio/what-ai.mp3",
+    "chars": 244,
+    "bytes": 118706
+  },
+  "steps-hero": {
+    "file": "audio/steps-hero.mp3",
+    "chars": 86,
+    "bytes": 48551
+  },
+  "steps-list": {
+    "file": "audio/steps-list.mp3",
+    "chars": 504,
+    "bytes": 264105
+  },
+  "steps-safety": {
+    "file": "audio/steps-safety.mp3",
+    "chars": 284,
+    "bytes": 144995
+  },
+  "ex-hero": {
+    "file": "audio/ex-hero.mp3",
+    "chars": 158,
+    "bytes": 91911
+  },
+  "ex-explain": {
+    "file": "audio/ex-explain.mp3",
+    "chars": 185,
+    "bytes": 96173
+  },
+  "ex-demo": {
+    "file": "audio/ex-demo.mp3",
+    "chars": 84,
+    "bytes": 50401
+  },
+  "ex-note": {
+    "file": "audio/ex-note.mp3",
+    "chars": 157,
+    "bytes": 86334
+  },
+  "teach-hero": {
+    "file": "audio/teach-hero.mp3",
+    "chars": 72,
+    "bytes": 45430
+  },
+  "teach-agenda": {
+    "file": "audio/teach-agenda.mp3",
+    "chars": 173,
+    "bytes": 100715
+  },
+  "teach-stuck": {
+    "file": "audio/teach-stuck.mp3",
+    "chars": 183,
+    "bytes": 99448
+  },
+  "teach-patience": {
+    "file": "audio/teach-patience.mp3",
+    "chars": 166,
+    "bytes": 90964
+  },
+  "help-hero": {
+    "file": "audio/help-hero.mp3",
+    "chars": 90,
+    "bytes": 52218
+  },
+  "help-faq": {
+    "file": "audio/help-faq.mp3",
+    "chars": 364,
+    "bytes": 176768
+  },
+  "help-glossary": {
+    "file": "audio/help-glossary.mp3",
+    "chars": 140,
+    "bytes": 83025
+  },
+  "help-contact": {
+    "file": "audio/help-contact.mp3",
+    "chars": 53,
+    "bytes": 29917
+  }
+}

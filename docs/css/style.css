@@ -335,11 +335,6 @@ a:hover { color: var(--teal); }
   margin: 1rem 0;
 }
 
-.term {
-  font-weight: 700;
-  color: var(--teal-dark);
-  white-space: nowrap;
-}
 
 .faq details {
   background: var(--bg);
@@ -483,4 +478,52 @@ a:hover { color: var(--teal); }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .btn { transition: none; }
+}
+
+
+/* English tech terms in quotes + Sinhala pronunciation */
+.term {
+  font-weight: 700;
+  color: var(--teal-dark);
+  font-family: var(--font), ui-monospace, monospace;
+  background: var(--teal-light);
+  padding: 0.05em 0.28em;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+.pron {
+  color: var(--ink-soft);
+  font-weight: 600;
+  font-size: 0.95em;
+  white-space: nowrap;
+}
+
+.glossary-lead {
+  margin: 0 0 1rem;
+  color: var(--ink-soft);
+}
+.glossary-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.65rem 1rem;
+  margin: 0;
+}
+.glossary-list > div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.6rem;
+  background: var(--bg);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.65rem 0.85rem;
+}
+.glossary-list dt {
+  margin: 0;
+  font-size: var(--fs);
+}
+.glossary-list dd {
+  margin: 0;
+  color: var(--ink-soft);
+  font-weight: 600;
 }

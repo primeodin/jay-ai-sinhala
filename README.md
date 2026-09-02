@@ -8,6 +8,8 @@
 
 **Repo:** https://github.com/primeodin/jay-ai-sinhala
 
+Want to help? See [CONTRIBUTING.md](CONTRIBUTING.md).
+
 ---
 
 ## English summary

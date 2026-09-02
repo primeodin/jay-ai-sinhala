@@ -83,6 +83,22 @@ python3 scripts/generate_audio.py
 
 ---
 
+## Daily builds series · දෛනික ඉගැන්වීම්
+
+Tiny, tested teaching repos — starter → mid. Ship one, read it, then climb:
+
+| Lane | Repo | Why open it |
+| --- | --- | --- |
+| Literacy (Sinhala) (this) | [jay-ai-sinhala](https://github.com/primeodin/jay-ai-sinhala) | Friends 70+ learning GitHub + AI — [live](https://primeodin.github.io/jay-ai-sinhala/) |
+| Starter | [first-commit-ai](https://github.com/primeodin/first-commit-ai) | Mock-first chat CLI + pytest |
+| Attention mid | [attention-warrior](https://github.com/primeodin/attention-warrior) | Transformer attention you can hold in one hand |
+| Shop skills | [mister-jay](https://github.com/primeodin/mister-jay) | Interactive DIY drills — [live](https://primeodin.github.io/mister-jay/) |
+| Systems DIY | [camera-selector](https://github.com/primeodin/camera-selector) | NVR/Frigate camera planning — [live](https://primeodin.github.io/camera-selector/) |
+
+Coming next on the weekday cadence: RAG starter → tool agent → prompt lab → embeddings → vision → memory → shop-skill explainer.
+
+Good first issues: [#1](https://github.com/primeodin/jay-ai-sinhala/issues/1) second local example, [#2](https://github.com/primeodin/jay-ai-sinhala/issues/2) keyboard + Listen, [#3](https://github.com/primeodin/jay-ai-sinhala/issues/3) CONTRIBUTING.md. Profile forge: [github.com/primeodin](https://github.com/primeodin)
+
 ## "License"
 
 - Site content & code: **"MIT"** — බලන්න [`LICENSE`](LICENSE).

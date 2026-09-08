@@ -102,7 +102,9 @@ Weekday cadence so far: chat · RAG · tokenizer · tool agent (shipped). Coming
 
 ## Help / good first issues
 
-Open tickets on this repo: [#1](https://github.com/primeodin/jay-ai-sinhala/issues/1) second local example, [#2](https://github.com/primeodin/jay-ai-sinhala/issues/2) keyboard + Listen, [#3](https://github.com/primeodin/jay-ai-sinhala/issues/3) CONTRIBUTING.md. Profile forge: [github.com/primeodin](https://github.com/primeodin)
+Want to help? See [`CONTRIBUTING.md`](CONTRIBUTING.md) (fork → open `docs/` → small PR).
+
+Open tickets on this repo: [#1](https://github.com/primeodin/jay-ai-sinhala/issues/1) second local example, [#2](https://github.com/primeodin/jay-ai-sinhala/issues/2) keyboard + Listen. Profile forge: [github.com/primeodin](https://github.com/primeodin)
 
 ## "License"
 
